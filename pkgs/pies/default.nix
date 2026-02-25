@@ -3,6 +3,7 @@
   stdenv,
   fetchurl,
   libxcrypt,
+  versionCheckHook,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -14,6 +15,15 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   buildInputs = [ libxcrypt ];
+
+  configureFlags = [ "--sysconfdir=/etc" ];
+
+  hardeningDisable = [ "format" ];
+
+  doCheck = true;
+
+  doInstallCheck = true;
+  nativeInstallCheckInputs = [ versionCheckHook ];
 
   meta = {
     description = "Program Invocation and Execution Supervisor";
